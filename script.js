@@ -1,489 +1,342 @@
 /**
- * portfolio — script.js
- * Handles:
- *  1. Theme toggle (dark ↔ light)
- *  2. Sticky nav + active link on scroll
- *  3. Mobile drawer
- *  4. Scroll-reveal animations
- *  5. Typed hero text
- *  6. Radar chart (SVG, Feature #1)
- *  7. Currently Learning widget (Feature #2)
- *  8. Project data + render (home preview & full gallery)
- *  9. Project filtering (type, language, search) + live count (Feature #3)
- * 10. Contact form (Formspree)
+ * script.js — Portfolio
+ * Modules:
+ *  1. PROJECT DATA  — edit this to add/update your projects
+ *  2. GITHUB STATS  — live star/fork counts via GitHub API
+ *  3. RENDER        — builds project cards (bjornmelin-style)
+ *  4. FILTER        — type, language, search + live count
+ *  5. THEME TOGGLE  — dark ↔ light, persisted to localStorage
+ *  6. NAV           — sticky header + active link on scroll
+ *  7. MOBILE DRAWER — hamburger open/close
+ *  8. SCROLL REVEAL — IntersectionObserver fade-in
+ *  9. CONTACT FORM  — Formspree async submit
  */
 
 
 /* ══════════════════════════════════════════════
    1. PROJECT DATA
-   Update this array to add / edit your projects.
-   Each entry:
-     id       — unique number
-     icon     — emoji
-     featured — show "Featured" badge instead of type badge
-     type     — "analyst" | "develop"
-     langs    — array of filter keys: "python" | "sql" | "r"
-     title    — project title
-     desc     — short description
-     tags     — displayed tag chips (any strings)
-     demo     — URL or null
-     repo     — URL or null
+   ─────────────────────────────────────────────
+   Fill in your real GitHub repos in `repo`.
+   The script will fetch live star/fork counts.
+   Set repo: null to skip GitHub stats for a project.
+
+   Fields:
+     id        — unique number
+     featured  — adds "Featured" badge
+     type      — "analyst" | "develop"
+     langs     — filter keys: "python" | "sql" | "r"
+     title     — display title
+     desc      — one-paragraph description
+     bullets   — 2 key highlights (shown in card)
+     tags      — tech stack tags
+     repo      — "owner/reponame" (for GitHub API) or null
+     demo      — live demo URL or null
+     ghUrl     — full GitHub URL (shown as Open link)
 ══════════════════════════════════════════════ */
 const PROJECTS = [
   {
-    id: 1, icon: '📊', featured: true,
-    type: 'analyst', langs: ['sql', 'python'],
-    title: 'Sales Performance Dashboard',
-    desc: 'End-to-end Power BI dashboard tracking KPIs across 5 regions. Reduced manual reporting by 80% and accelerated business decision-making.',
-    tags: ['Power BI', 'SQL', 'Python', 'DAX'],
-    demo: '#', repo: 'https://github.com/yourusername'
+    id: 1, featured: true,
+    type: "analyst", langs: ["sql", "python"],
+    title: "sales-performance-dashboard",
+    desc: "End-to-end Power BI dashboard tracking KPIs across 5 regions. Reduced manual reporting by 80% and improved decision-making speed for stakeholders.",
+    bullets: [
+      "Automated data refresh pipeline connecting SQL Server → Power BI",
+      "DAX measures for YoY growth, rolling averages, and forecast variance"
+    ],
+    tags: ["Power BI", "SQL", "Python", "DAX", "Pandas"],
+    repo: "yourusername/sales-performance-dashboard",
+    demo: null,
+    ghUrl: "https://github.com/yourusername/sales-performance-dashboard"
   },
   {
-    id: 2, icon: '🔮', featured: false,
-    type: 'develop', langs: ['python'],
-    title: 'Customer Churn Prediction',
-    desc: 'Random Forest + Logistic Regression model achieving 89% accuracy. Deployed as an interactive Streamlit app for non-technical stakeholders.',
-    tags: ['Python', 'Scikit-learn', 'Streamlit', 'Pandas'],
-    demo: '#', repo: 'https://github.com/yourusername'
+    id: 2, featured: true,
+    type: "develop", langs: ["python"],
+    title: "customer-churn-prediction",
+    desc: "Random Forest + Logistic Regression model predicting customer churn with 89% accuracy. Deployed as an interactive Streamlit app for non-technical users.",
+    bullets: [
+      "Feature engineering on 20+ customer behavioral variables",
+      "Streamlit dashboard with real-time prediction and SHAP explainability"
+    ],
+    tags: ["Python", "Scikit-learn", "Streamlit", "Pandas", "SHAP"],
+    repo: "yourusername/customer-churn-prediction",
+    demo: null,
+    ghUrl: "https://github.com/yourusername/customer-churn-prediction"
   },
   {
-    id: 3, icon: '🛒', featured: true,
-    type: 'analyst', langs: ['python', 'sql'],
-    title: 'E-Commerce RFM Segmentation',
-    desc: 'Customer segmentation using Recency-Frequency-Monetary analysis on 100k+ transactions. Visualized in an interactive Tableau dashboard.',
-    tags: ['Python', 'SQL', 'Tableau', 'NumPy'],
-    demo: '#', repo: 'https://github.com/yourusername'
+    id: 3, featured: false,
+    type: "analyst", langs: ["python", "sql"],
+    title: "ecommerce-rfm-segmentation",
+    desc: "Customer segmentation using Recency-Frequency-Monetary analysis on 100k+ transactions. Results visualized in an interactive Tableau dashboard.",
+    bullets: [
+      "RFM scoring pipeline processing 100k+ transaction records",
+      "Tableau dashboard with dynamic segment drilldowns"
+    ],
+    tags: ["Python", "SQL", "Tableau", "NumPy", "Pandas"],
+    repo: "yourusername/ecommerce-rfm-segmentation",
+    demo: null,
+    ghUrl: "https://github.com/yourusername/ecommerce-rfm-segmentation"
   },
   {
-    id: 4, icon: '🌐', featured: false,
-    type: 'develop', langs: ['python', 'sql'],
-    title: 'Job Listings Scraping Pipeline',
-    desc: 'Automated scraper collecting job listing data from 3 platforms. Stores results to PostgreSQL and sends a daily digest email summary.',
-    tags: ['Python', 'BeautifulSoup', 'PostgreSQL', 'Airflow'],
-    demo: null, repo: 'https://github.com/yourusername'
+    id: 4, featured: false,
+    type: "develop", langs: ["python", "sql"],
+    title: "job-listings-scraper",
+    desc: "Automated web scraping pipeline collecting job listing data from 3 platforms, storing results to PostgreSQL and sending daily digest emails.",
+    bullets: [
+      "Scrapers for 3 Indonesian job platforms with deduplication logic",
+      "Airflow DAG scheduling daily runs with email alerts on failures"
+    ],
+    tags: ["Python", "BeautifulSoup", "PostgreSQL", "Airflow"],
+    repo: "yourusername/job-listings-scraper",
+    demo: null,
+    ghUrl: "https://github.com/yourusername/job-listings-scraper"
   },
   {
-    id: 5, icon: '📉', featured: false,
-    type: 'analyst', langs: ['python', 'r'],
-    title: 'IDX Stock Price EDA',
-    desc: 'Exploratory analysis on Indonesian Stock Exchange data. Includes correlation heatmaps, rolling averages, and volatility comparison charts.',
-    tags: ['Python', 'R', 'Plotly', 'Pandas'],
-    demo: '#', repo: 'https://github.com/yourusername'
+    id: 5, featured: false,
+    type: "analyst", langs: ["python", "r"],
+    title: "idx-stock-eda",
+    desc: "Exploratory analysis on Indonesian Stock Exchange (IDX) data including correlation heatmaps, rolling averages, and sector volatility comparison.",
+    bullets: [
+      "Cleaned and processed 5 years of IDX OHLCV data",
+      "Interactive Plotly charts with rolling correlation and Bollinger Bands"
+    ],
+    tags: ["Python", "R", "Plotly", "Pandas", "Statsmodels"],
+    repo: "yourusername/idx-stock-eda",
+    demo: null,
+    ghUrl: "https://github.com/yourusername/idx-stock-eda"
   },
   {
-    id: 6, icon: '🏥', featured: false,
-    type: 'analyst', langs: ['sql'],
-    title: 'Hospital Wait Time Analytics',
-    desc: 'SQL-based patient flow analysis identifying bottlenecks. Presented findings that contributed to a 22% reduction in average wait times.',
-    tags: ['SQL', 'Excel', 'Power BI'],
-    demo: null, repo: 'https://github.com/yourusername'
+    id: 6, featured: false,
+    type: "analyst", langs: ["sql"],
+    title: "hospital-wait-time-analytics",
+    desc: "SQL-based patient flow analysis identifying operational bottlenecks. Findings contributed to a 22% reduction in average patient wait times.",
+    bullets: [
+      "Window functions to calculate patient flow and queue build-up by hour",
+      "Power BI report highlighting peak bottleneck windows for management"
+    ],
+    tags: ["SQL", "Power BI", "Excel"],
+    repo: "yourusername/hospital-wait-time-analytics",
+    demo: null,
+    ghUrl: "https://github.com/yourusername/hospital-wait-time-analytics"
   },
   {
-    id: 7, icon: '🧠', featured: false,
-    type: 'develop', langs: ['python'],
-    title: 'Sentiment Analysis — Product Reviews',
-    desc: 'NLP pipeline classifying Indonesian-language product reviews. Fine-tuned IndoBERT model achieving 91% F1-score on the test set.',
-    tags: ['Python', 'HuggingFace', 'BERT', 'PyTorch'],
-    demo: null, repo: 'https://github.com/yourusername'
+    id: 7, featured: false,
+    type: "develop", langs: ["python"],
+    title: "sentiment-analysis-reviews",
+    desc: "NLP pipeline classifying Indonesian-language product reviews using a fine-tuned IndoBERT model, achieving 91% F1-score on the held-out test set.",
+    bullets: [
+      "Fine-tuned IndoBERT on 15k labeled Indonesian reviews",
+      "Inference API built with FastAPI for real-time classification"
+    ],
+    tags: ["Python", "HuggingFace", "PyTorch", "FastAPI", "BERT"],
+    repo: "yourusername/sentiment-analysis-reviews",
+    demo: null,
+    ghUrl: "https://github.com/yourusername/sentiment-analysis-reviews"
   },
   {
-    id: 8, icon: '📍', featured: false,
-    type: 'analyst', langs: ['python', 'sql'],
-    title: 'Geospatial Retail Heatmap',
-    desc: 'Folium + GeoPandas visualization of retail store foot-traffic in Surabaya. Used by management to identify expansion opportunities.',
-    tags: ['Python', 'GeoPandas', 'Folium', 'SQL'],
-    demo: '#', repo: 'https://github.com/yourusername'
+    id: 8, featured: false,
+    type: "analyst", langs: ["python", "sql"],
+    title: "geospatial-retail-heatmap",
+    desc: "Folium + GeoPandas visualization of retail store foot-traffic patterns in Surabaya. Used by management to identify optimal expansion locations.",
+    bullets: [
+      "Processed GPS check-in data with GeoPandas spatial joins",
+      "Folium choropleth heatmap with district-level density overlays"
+    ],
+    tags: ["Python", "GeoPandas", "Folium", "SQL", "Plotly"],
+    repo: "yourusername/geospatial-retail-heatmap",
+    demo: null,
+    ghUrl: "https://github.com/yourusername/geospatial-retail-heatmap"
   },
 ];
 
 
 /* ══════════════════════════════════════════════
-   2. CURRENTLY LEARNING DATA (Feature #2)
-   Update topics, percentage, and color as you learn.
-   Colors: "accent" | "green" | "amber"
+   2. GITHUB STATS — live fetch via public API
+   Fetches stars + forks for each project repo.
+   Gracefully falls back (no stats shown) if repo
+   is private, doesn't exist, or rate-limited.
 ══════════════════════════════════════════════ */
-const LEARNING = [
-  { name: 'Deep Learning (PyTorch)',         pct: 60, color: 'accent', sub: 'CNNs, RNNs, Transformers basics' },
-  { name: 'dbt (data build tool)',            pct: 45, color: 'green',  sub: 'Data modeling & transformation' },
-  { name: 'Apache Spark / PySpark',           pct: 35, color: 'amber',  sub: 'Big data processing pipelines' },
-];
+
+// Cache fetched stats to avoid re-fetching
+const ghCache = {};
+
+async function fetchGhStats(repoPath) {
+  if (!repoPath) return null;
+  if (ghCache[repoPath]) return ghCache[repoPath];
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repoPath}`, {
+      headers: { Accept: "application/vnd.github.v3+json" }
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const stats = {
+      stars:   data.stargazers_count ?? 0,
+      forks:   data.forks_count ?? 0,
+      updated: data.pushed_at ? formatDate(data.pushed_at) : null,
+    };
+    ghCache[repoPath] = stats;
+    return stats;
+  } catch {
+    return null;
+  }
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  const now = new Date();
+  const diff = Math.floor((now - d) / 86400000); // days
+  if (diff === 0) return "Updated today";
+  if (diff === 1) return "Updated yesterday";
+  if (diff < 30)  return `Updated ${diff} days ago`;
+  if (diff < 365) return `Updated ${Math.floor(diff/30)} month${Math.floor(diff/30)>1?'s':''} ago`;
+  return `Updated ${d.toLocaleDateString('en-US', { month:'short', year:'numeric' })}`;
+}
+
+// Star icon SVG
+const starSVG = `<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+  <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/>
+</svg>`;
+
+// Fork icon SVG
+const forkSVG = `<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+  <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/>
+</svg>`;
 
 
 /* ══════════════════════════════════════════════
-   3. SKILLS RADAR DATA (Feature #1)
-   Edit values 0–100 for each skill axis.
+   3. BUILD PROJECT CARD
+   Mirrors bjornmelin.io card structure exactly:
+   [type · lang · Featured?]
+   [title as link]
+   [desc]
+   [bullet points]
+   [tech tags]
+   [★ stars  ⑂ forks  Updated X ago]
+   [Open]  [Live]
 ══════════════════════════════════════════════ */
-const RADAR_SKILLS = [
-  { label: 'Python',       value: 85 },
-  { label: 'SQL',          value: 80 },
-  { label: 'ML',           value: 65 },
-  { label: 'Viz / BI',     value: 78 },
-  { label: 'Statistics',   value: 70 },
-  { label: 'Data Eng.',    value: 50 },
-];
-
-
-/* ══════════════════════════════════════════════
-   4. TYPED PHRASES
-══════════════════════════════════════════════ */
-const TYPED_PHRASES = [
-  'Data Analytics',
-  'Machine Learning',
-  'SQL & Python',
-  'Power BI Dashboards',
-  'Data Visualization',
-];
-
-
-/* ══════════════════════════════════════════════
-   HELPERS
-══════════════════════════════════════════════ */
-
-/** Build a project card element */
-function buildCard(p) {
-  const badgeClass = p.featured ? 'badge--featured' : `badge--${p.type}`;
-  const badgeText  = p.featured ? 'Featured' : (p.type === 'analyst' ? 'Analytics' : 'Development');
-
-  const card = document.createElement('div');
-  card.className = 'proj-card';
+function buildCard(p, stats) {
+  const card = document.createElement("article");
+  card.className = "proj-card";
   card.dataset.type  = p.type;
-  card.dataset.langs = p.langs.join(',');
+  card.dataset.langs = p.langs.join(",");
 
-  const demoLink = p.demo
-    ? `<a href="${p.demo}" class="proj-link" target="_blank" rel="noopener">Live Demo ↗</a>`
-    : '';
-  const repoLink = p.repo
-    ? `<a href="${p.repo}" class="proj-link" target="_blank" rel="noopener">GitHub ↗</a>`
-    : '';
+  // Type row
+  const typeLabel = p.type === "analyst" ? "Data Analytics" : "Development";
+  const langLabel = p.langs.map(l => l.charAt(0).toUpperCase() + l.slice(1)).join(" · ");
+  const featuredBadge = p.featured
+    ? `<span class="proj-badge-featured">Featured</span>`
+    : "";
+
+  // Stats row
+  let statsHTML = "";
+  if (stats) {
+    statsHTML = `
+      <div class="proj-stats">
+        <span class="proj-stat stat-stars">${starSVG} ${stats.stars.toLocaleString()}</span>
+        <span class="proj-stat stat-forks">${forkSVG} ${stats.forks.toLocaleString()}</span>
+        ${stats.updated ? `<span class="proj-stat stat-updated">${stats.updated}</span>` : ""}
+      </div>`;
+  }
+
+  // Links
+  const openLink = p.ghUrl
+    ? `<a href="${p.ghUrl}" class="proj-link" target="_blank" rel="noopener">Open</a>`
+    : "";
+  const liveLink = p.demo
+    ? `<a href="${p.demo}" class="proj-link proj-link--primary" target="_blank" rel="noopener">Live</a>`
+    : "";
+
+  // Bullets
+  const bulletsHTML = p.bullets && p.bullets.length
+    ? `<ul class="proj-bullets">${p.bullets.map(b => `<li>${b}</li>`).join("")}</ul>`
+    : "";
 
   card.innerHTML = `
-    <span class="proj-badge ${badgeClass}">${badgeText}</span>
-    <div class="proj-icon">${p.icon}</div>
-    <h3 class="proj-title">${p.title}</h3>
+    <div class="proj-type-row">
+      <span class="proj-type">${typeLabel}</span>
+      <span class="proj-type-sep" aria-hidden="true"></span>
+      <span class="proj-type">${langLabel}</span>
+      ${featuredBadge ? `<span class="proj-type-sep" aria-hidden="true"></span>${featuredBadge}` : ""}
+    </div>
+    <a href="${p.ghUrl || "#"}" class="proj-title-link" target="_blank" rel="noopener">${p.title}</a>
     <p class="proj-desc">${p.desc}</p>
-    <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
-    <div class="proj-links">${demoLink}${repoLink}</div>
+    ${bulletsHTML}
+    <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join("")}</div>
+    ${statsHTML}
+    <div class="proj-links">${openLink}${liveLink}</div>
   `;
+
   return card;
 }
 
-/** Render an array of projects into a grid element */
-function renderProjects(list, gridEl) {
-  gridEl.innerHTML = '';
-  if (list.length === 0) {
-    gridEl.innerHTML = `
-      <div class="no-results">
-        <div class="no-results-icon">🔍</div>
-        No projects match your filters. Try a different combination.
-      </div>`;
+/** Render project list into a grid, fetching GitHub stats for each */
+async function renderProjects(list, gridEl) {
+  gridEl.innerHTML = "";
+
+  if (!list.length) {
+    gridEl.innerHTML = `<div class="no-results">No projects match your current filters.</div>`;
     return;
   }
-  list.forEach(p => gridEl.appendChild(buildCard(p)));
-}
 
-
-/* ══════════════════════════════════════════════
-   5. THEME TOGGLE
-══════════════════════════════════════════════ */
-function initTheme() {
-  const html      = document.documentElement;
-  const btn       = document.getElementById('theme-toggle');
-  const label     = document.getElementById('toggle-label');
-  const navLabel  = btn.querySelector('.toggle-label');
-
-  // Restore saved preference
-  const saved = localStorage.getItem('portfolio-theme');
-  if (saved) html.setAttribute('data-theme', saved);
-
-  function applyTheme(theme) {
-    html.setAttribute('data-theme', theme);
-    localStorage.setItem('portfolio-theme', theme);
-    if (navLabel) navLabel.textContent = theme === 'dark' ? 'Light' : 'Dark';
-  }
-
-  btn.addEventListener('click', () => {
-    const current = html.getAttribute('data-theme');
-    applyTheme(current === 'dark' ? 'light' : 'dark');
+  // Build cards immediately with placeholder stats, then update with real stats
+  const cards = list.map(p => {
+    const card = buildCard(p, null);
+    gridEl.appendChild(card);
+    return { p, card };
   });
 
-  // Set initial label
-  const current = html.getAttribute('data-theme');
-  if (navLabel) navLabel.textContent = current === 'dark' ? 'Light' : 'Dark';
-}
+  // Fetch stats in parallel and update each card's stats row
+  await Promise.all(cards.map(async ({ p, card }) => {
+    if (!p.repo) return;
+    const stats = await fetchGhStats(p.repo);
+    if (!stats) return;
 
+    // Inject stats row just before the links div
+    const linksDiv = card.querySelector(".proj-links");
+    if (!linksDiv) return;
 
-/* ══════════════════════════════════════════════
-   6. STICKY NAV + ACTIVE LINK
-══════════════════════════════════════════════ */
-function initNav() {
-  const navbar   = document.getElementById('navbar');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const sections = [...document.querySelectorAll('section[id]')];
-
-  window.addEventListener('scroll', () => {
-    // Scrolled class for blur effect
-    navbar.classList.toggle('scrolled', window.scrollY > 30);
-
-    // Active link tracking
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 90) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-    });
-  }, { passive: true });
-}
-
-
-/* ══════════════════════════════════════════════
-   7. MOBILE DRAWER
-══════════════════════════════════════════════ */
-function initDrawer() {
-  const hamburger = document.getElementById('hamburger');
-  const drawer    = document.getElementById('mobile-drawer');
-  const close     = document.getElementById('drawer-close');
-  const links     = document.querySelectorAll('.drawer-link');
-
-  const open  = () => { drawer.classList.add('open');  hamburger.setAttribute('aria-expanded', 'true'); };
-  const shut  = () => { drawer.classList.remove('open'); hamburger.setAttribute('aria-expanded', 'false'); };
-
-  hamburger.addEventListener('click', open);
-  close.addEventListener('click', shut);
-  links.forEach(a => a.addEventListener('click', shut));
-}
-
-
-/* ══════════════════════════════════════════════
-   8. SCROLL REVEAL
-══════════════════════════════════════════════ */
-function initReveal() {
-  const els = document.querySelectorAll('.reveal');
-  const io  = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  els.forEach(el => io.observe(el));
-}
-
-
-/* ══════════════════════════════════════════════
-   9. TYPED EFFECT
-══════════════════════════════════════════════ */
-function initTyped() {
-  const el     = document.getElementById('typed');
-  if (!el) return;
-
-  let pi = 0, ci = 0, deleting = false;
-
-  function tick() {
-    const word = TYPED_PHRASES[pi];
-
-    if (!deleting) {
-      el.textContent = word.slice(0, ++ci);
-      if (ci === word.length) {
-        deleting = true;
-        setTimeout(tick, 1800);
-        return;
-      }
-    } else {
-      el.textContent = word.slice(0, --ci);
-      if (ci === 0) {
-        deleting = false;
-        pi = (pi + 1) % TYPED_PHRASES.length;
-      }
-    }
-    setTimeout(tick, deleting ? 55 : 80);
-  }
-  tick();
-}
-
-
-/* ══════════════════════════════════════════════
-   10. RADAR CHART — SVG (Feature #1)
-   Pure SVG, no external library.
-══════════════════════════════════════════════ */
-function initRadar() {
-  const svg = document.getElementById('radar-chart');
-  if (!svg) return;
-
-  const CX = 100, CY = 100, R = 72;
-  const n  = RADAR_SKILLS.length;
-  const ns = 'http://www.w3.org/2000/svg';
-
-  // Get accent color from CSS variable
-  const style   = getComputedStyle(document.documentElement);
-  const accent  = style.getPropertyValue('--accent').trim() || '#4D8EFF';
-
-  /** Polar to cartesian */
-  function pt(radius, index) {
-    const angle = (Math.PI * 2 * index) / n - Math.PI / 2;
-    return {
-      x: CX + radius * Math.cos(angle),
-      y: CY + radius * Math.sin(angle),
-    };
-  }
-
-  function polyPoints(radius) {
-    return Array.from({ length: n }, (_, i) => {
-      const p = pt(radius, i);
-      return `${p.x},${p.y}`;
-    }).join(' ');
-  }
-
-  // Background grid rings
-  [0.25, 0.5, 0.75, 1].forEach(frac => {
-    const poly = document.createElementNS(ns, 'polygon');
-    poly.setAttribute('points', polyPoints(R * frac));
-    poly.setAttribute('fill', 'none');
-    poly.setAttribute('stroke', 'currentColor');
-    poly.setAttribute('stroke-width', '0.5');
-    poly.setAttribute('opacity', '0.15');
-    svg.appendChild(poly);
-  });
-
-  // Axis lines
-  for (let i = 0; i < n; i++) {
-    const p = pt(R, i);
-    const line = document.createElementNS(ns, 'line');
-    line.setAttribute('x1', CX); line.setAttribute('y1', CY);
-    line.setAttribute('x2', p.x); line.setAttribute('y2', p.y);
-    line.setAttribute('stroke', 'currentColor');
-    line.setAttribute('stroke-width', '0.5');
-    line.setAttribute('opacity', '0.2');
-    svg.appendChild(line);
-  }
-
-  // Data polygon
-  const dataPoints = RADAR_SKILLS.map((s, i) => {
-    const r = R * (s.value / 100);
-    const p = pt(r, i);
-    return `${p.x},${p.y}`;
-  }).join(' ');
-
-  const fill = document.createElementNS(ns, 'polygon');
-  fill.setAttribute('points', dataPoints);
-  fill.setAttribute('fill', accent);
-  fill.setAttribute('fill-opacity', '0.18');
-  fill.setAttribute('stroke', accent);
-  fill.setAttribute('stroke-width', '1.5');
-  svg.appendChild(fill);
-
-  // Dots + labels
-  RADAR_SKILLS.forEach((s, i) => {
-    const r = R * (s.value / 100);
-    const p = pt(r, i);
-
-    // Dot
-    const dot = document.createElementNS(ns, 'circle');
-    dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y); dot.setAttribute('r', '3');
-    dot.setAttribute('fill', accent);
-    svg.appendChild(dot);
-
-    // Label
-    const lp    = pt(R + 14, i);
-    const text  = document.createElementNS(ns, 'text');
-    text.setAttribute('x', lp.x); text.setAttribute('y', lp.y);
-    text.setAttribute('text-anchor', 'middle');
-    text.setAttribute('dominant-baseline', 'middle');
-    text.setAttribute('font-size', '7.5');
-    text.setAttribute('font-family', 'Inter, sans-serif');
-    text.setAttribute('font-weight', '600');
-    text.setAttribute('fill', 'currentColor');
-    text.setAttribute('opacity', '0.65');
-    text.textContent = s.label;
-    svg.appendChild(text);
-  });
-
-  // Re-draw on theme change (accent color changes)
-  const observer = new MutationObserver(() => {
-    svg.innerHTML = '';
-    initRadar();
-  });
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-}
-
-
-/* ══════════════════════════════════════════════
-   11. CURRENTLY LEARNING WIDGET (Feature #2)
-══════════════════════════════════════════════ */
-function initLearning() {
-  const list = document.getElementById('learning-list');
-  if (!list) return;
-
-  LEARNING.forEach(item => {
-    const li = document.createElement('li');
-    li.className = 'learning-item';
-    li.innerHTML = `
-      <div class="learning-top">
-        <span class="learning-name">${item.name}</span>
-        <span class="learning-pct">${item.pct}%</span>
-      </div>
-      <div class="learning-bar-bg">
-        <div class="learning-bar-fill learning-bar-fill--${item.color}" data-pct="${item.pct}"></div>
-      </div>
-      <span class="learning-sub">${item.sub}</span>
+    const statsDiv = document.createElement("div");
+    statsDiv.className = "proj-stats";
+    statsDiv.innerHTML = `
+      <span class="proj-stat stat-stars">${starSVG} ${stats.stars.toLocaleString()}</span>
+      <span class="proj-stat stat-forks">${forkSVG} ${stats.forks.toLocaleString()}</span>
+      ${stats.updated ? `<span class="proj-stat stat-updated">${stats.updated}</span>` : ""}
     `;
-    list.appendChild(li);
-  });
-
-  // Animate bars in when visible
-  const fills = list.querySelectorAll('.learning-bar-fill');
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        fills.forEach(f => {
-          f.style.width = f.dataset.pct + '%';
-        });
-        io.disconnect();
-      }
-    });
-  }, { threshold: 0.4 });
-  io.observe(list);
+    card.insertBefore(statsDiv, linksDiv);
+  }));
 }
 
 
 /* ══════════════════════════════════════════════
-   12. PROJECTS — RENDER + FILTERING (Feature #3)
+   4. FILTER LOGIC
+   Type chips + Language chips + Search input
+   Live count updates as filters change
 ══════════════════════════════════════════════ */
 function initProjects() {
-  // Home preview — top 3 featured first, then by id
-  const previewGrid = document.getElementById('preview-grid');
-  if (previewGrid) {
-    const top3 = [...PROJECTS]
-      .sort((a, b) => b.featured - a.featured)
-      .slice(0, 3);
-    renderProjects(top3, previewGrid);
+  // Home preview — top 3 (featured first)
+  const homeGrid = document.getElementById("home-proj-grid");
+  if (homeGrid) {
+    const top3 = [...PROJECTS].sort((a, b) => b.featured - a.featured).slice(0, 3);
+    renderProjects(top3, homeGrid);
   }
 
-  // Update home stat
-  const projStat = document.getElementById('proj-stat');
-  if (projStat) projStat.innerHTML = `${PROJECTS.length}<span class="accent">+</span>`;
-
   // Full gallery
-  const fullGrid  = document.getElementById('proj-grid');
-  if (!fullGrid) return;
+  const allGrid   = document.getElementById("all-proj-grid");
+  if (!allGrid) return;
 
-  const typeChips  = document.querySelectorAll('#type-chips .chip');
-  const langChips  = document.querySelectorAll('#lang-chips .chip');
-  const searchEl   = document.getElementById('proj-search');
-  const countEl    = document.getElementById('count-num');
+  const countEl   = document.getElementById("count-num");
+  const searchEl  = document.getElementById("proj-search");
+  const typeGroup = document.getElementById("type-chips");
+  const langGroup = document.getElementById("lang-chips");
 
-  let activeType = 'all';
-  let activeLang = 'all';
-  let searchQuery = '';
+  let activeType = "all";
+  let activeLang = "all";
+  let searchQ    = "";
 
   function applyFilters() {
-    const q = searchQuery.toLowerCase().trim();
-
+    const q = searchQ.toLowerCase().trim();
     const filtered = PROJECTS.filter(p => {
-      const typeOk = activeType === 'all' || p.type === activeType;
-      const langOk = activeLang === 'all' || p.langs.includes(activeLang);
+      const typeOk   = activeType === "all" || p.type === activeType;
+      const langOk   = activeLang === "all" || p.langs.includes(activeLang);
       const searchOk = !q
         || p.title.toLowerCase().includes(q)
         || p.desc.toLowerCase().includes(q)
@@ -491,37 +344,41 @@ function initProjects() {
       return typeOk && langOk && searchOk;
     });
 
-    renderProjects(filtered, fullGrid);
-
-    // Live count update (Feature #3)
+    renderProjects(filtered, allGrid);
     if (countEl) countEl.textContent = filtered.length;
   }
 
-  // Type filter chips
-  document.getElementById('type-chips').addEventListener('click', e => {
-    const btn = e.target.closest('.chip');
+  // Type chip clicks
+  typeGroup.addEventListener("click", e => {
+    const btn = e.target.closest(".fchip");
     if (!btn) return;
-    typeChips.forEach(c => { c.classList.remove('chip--on'); c.setAttribute('aria-checked', 'false'); });
-    btn.classList.add('chip--on');
-    btn.setAttribute('aria-checked', 'true');
+    typeGroup.querySelectorAll(".fchip").forEach(c => {
+      c.classList.remove("fchip--on");
+      c.setAttribute("aria-checked", "false");
+    });
+    btn.classList.add("fchip--on");
+    btn.setAttribute("aria-checked", "true");
     activeType = btn.dataset.val;
     applyFilters();
   });
 
-  // Language filter chips
-  document.getElementById('lang-chips').addEventListener('click', e => {
-    const btn = e.target.closest('.chip');
+  // Language chip clicks
+  langGroup.addEventListener("click", e => {
+    const btn = e.target.closest(".fchip");
     if (!btn) return;
-    langChips.forEach(c => { c.classList.remove('chip--on'); c.setAttribute('aria-checked', 'false'); });
-    btn.classList.add('chip--on');
-    btn.setAttribute('aria-checked', 'true');
+    langGroup.querySelectorAll(".fchip").forEach(c => {
+      c.classList.remove("fchip--on");
+      c.setAttribute("aria-checked", "false");
+    });
+    btn.classList.add("fchip--on");
+    btn.setAttribute("aria-checked", "true");
     activeLang = btn.dataset.val;
     applyFilters();
   });
 
   // Search
-  searchEl.addEventListener('input', e => {
-    searchQuery = e.target.value;
+  searchEl.addEventListener("input", e => {
+    searchQ = e.target.value;
     applyFilters();
   });
 
@@ -531,42 +388,135 @@ function initProjects() {
 
 
 /* ══════════════════════════════════════════════
-   13. CONTACT FORM (Formspree)
-   Register at https://formspree.io, get a form ID,
-   and replace YOUR_FORM_ID in index.html action attr.
+   5. THEME TOGGLE — dark ↔ light, persisted
+══════════════════════════════════════════════ */
+function initTheme() {
+  const html  = document.documentElement;
+  const btn   = document.getElementById("theme-btn");
+  const icon  = document.getElementById("theme-icon");
+  const label = document.getElementById("theme-label");
+
+  function setTheme(theme) {
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("portfolio-theme", theme);
+    if (icon)  icon.textContent  = theme === "dark" ? "☀" : "☾";
+    if (label) label.textContent = theme === "dark" ? "Light mode" : "Dark mode";
+  }
+
+  // Restore saved preference
+  const saved = localStorage.getItem("portfolio-theme");
+  if (saved) setTheme(saved);
+  else setTheme("dark"); // default dark
+
+  btn?.addEventListener("click", () => {
+    const current = html.getAttribute("data-theme");
+    setTheme(current === "dark" ? "light" : "dark");
+  });
+}
+
+
+/* ══════════════════════════════════════════════
+   6. STICKY NAV + ACTIVE LINK
+══════════════════════════════════════════════ */
+function initNav() {
+  const header   = document.getElementById("site-header");
+  const navLinks = document.querySelectorAll(".nav-link");
+  const sections = [...document.querySelectorAll("section[id]")];
+
+  window.addEventListener("scroll", () => {
+    // Blur on scroll
+    header?.classList.toggle("scrolled", window.scrollY > 20);
+
+    // Active section tracking
+    let current = "";
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle("active", a.getAttribute("href") === "#" + current);
+    });
+  }, { passive: true });
+}
+
+
+/* ══════════════════════════════════════════════
+   7. MOBILE DRAWER
+══════════════════════════════════════════════ */
+function initDrawer() {
+  const hamburger = document.getElementById("hamburger");
+  const drawer    = document.getElementById("nav-drawer");
+  const close     = document.getElementById("drawer-close");
+  const links     = document.querySelectorAll(".drawer-link");
+
+  const open = () => {
+    drawer.classList.add("open");
+    drawer.setAttribute("aria-hidden", "false");
+    hamburger.setAttribute("aria-expanded", "true");
+  };
+  const shut = () => {
+    drawer.classList.remove("open");
+    drawer.setAttribute("aria-hidden", "true");
+    hamburger.setAttribute("aria-expanded", "false");
+  };
+
+  hamburger?.addEventListener("click", open);
+  close?.addEventListener("click", shut);
+  links.forEach(a => a.addEventListener("click", shut));
+}
+
+
+/* ══════════════════════════════════════════════
+   8. SCROLL REVEAL
+══════════════════════════════════════════════ */
+function initReveal() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("in");
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+}
+
+
+/* ══════════════════════════════════════════════
+   9. CONTACT FORM — Formspree
+   Replace YOUR_FORM_ID in index.html with your
+   actual Formspree form ID (free at formspree.io)
 ══════════════════════════════════════════════ */
 function initForm() {
-  const form   = document.getElementById('contact-form');
-  const status = document.getElementById('form-status');
+  const form   = document.getElementById("contact-form");
+  const status = document.getElementById("form-status");
   if (!form) return;
 
-  form.addEventListener('submit', async e => {
+  form.addEventListener("submit", async e => {
     e.preventDefault();
-    const btn = form.querySelector('#form-submit');
-    btn.textContent = 'Sending…';
+    const btn = document.getElementById("form-submit");
+    btn.textContent = "Sending…";
     btn.disabled = true;
-    status.className = 'form-status';
-    status.style.display = 'none';
+    status.className = "form-status";
 
     try {
       const res = await fetch(form.action, {
-        method: 'POST',
+        method: "POST",
         body: new FormData(form),
-        headers: { Accept: 'application/json' },
+        headers: { Accept: "application/json" },
       });
-
       if (res.ok) {
-        status.className = 'form-status ok';
-        status.textContent = '✓ Message sent! I\'ll get back to you within 24 hours.';
+        status.className = "form-status ok";
+        status.textContent = "✓ Message sent! I'll get back to you within 24 hours.";
         form.reset();
       } else {
-        throw new Error('Server error');
+        throw new Error();
       }
     } catch {
-      status.className = 'form-status err';
-      status.textContent = '✕ Something went wrong. Please email me directly.';
+      status.className = "form-status err";
+      status.textContent = "✕ Something went wrong. Please email me directly.";
     } finally {
-      btn.textContent = 'Send Message →';
+      btn.textContent = "Send Message";
       btn.disabled = false;
     }
   });
@@ -574,16 +524,13 @@ function initForm() {
 
 
 /* ══════════════════════════════════════════════
-   INIT — run all modules when DOM is ready
+   INIT
 ══════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   initTheme();
   initNav();
   initDrawer();
   initReveal();
-  initTyped();
-  initRadar();
-  initLearning();
   initProjects();
   initForm();
 });
