@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-<body>  
-  <main id="main-content">
-
-    <!-- ════════════ HOME ════════════ -->
-    <section id="home" class="page-section">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruby Arthalia Golden</title>
+  <meta name="description" content="Information Systems student at Universitas Ciputra Surabaya focused on Data Analytics, Data Science, and Machine Learning." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <script src="components/header.js"></script>
+  <main>
+    <!-- ── HERO ── -->
+    <section class="page-section page-section--top">
       <div class="container">
-
-        <!-- Hero block -->
         <div class="hero-block reveal">
-          <div class="hero-photo-wrap">
-            <div class="hero-photo">
-              <img src="DSC51415.JPG" alt="Ruby Arthalia" />
-              <!-- <span class="photo-placeholder">👤</span> -->
-            </div>
+
+          <div class="hero-photo">
+            <img src="assets/DSC51415.JPG" alt="Ruby" />
+            <!-- <span style="user-select:none">👤</span> -->
           </div>
+
           <div class="hero-text">
-            <h1 class="hero-name">Hi, I'm Your Name</h1>
-            <p class="hero-tagline">Information Systems Student&nbsp;|&nbsp;Data Analytics&nbsp;|&nbsp;Machine Learning&nbsp;|&nbsp;Universitas Ciputra Surabaya</p>
+            <h1 class="hero-name">Hi, I'm Ruby</h1>
+            <p class="hero-tagline">
+              Information Systems Student &nbsp;|&nbsp; Data Analytics &nbsp;|&nbsp;
+              Machine Learning &nbsp;|&nbsp; Universitas Ciputra Surabaya
+            </p>
             <div class="role-chips">
               <span class="role-chip">Data Analytics</span>
               <span class="role-chip">Data Science</span>
@@ -26,80 +37,150 @@
               <span class="role-chip">Python &amp; SQL</span>
             </div>
             <div class="hero-ctas">
-              <a href="#contact"  class="btn btn-primary">Get in Touch</a>
-              <a href="#projects" class="btn btn-outline">View Projects</a>
+              <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+              <a href="assets/resume.pdf" class="btn btn-outline" download>
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M7 9.5L3.5 6H5.75V1H8.25V6H10.5L7 9.5Z" fill="currentColor"/>
+                  <rect x="2" y="11" width="10" height="1.5" rx=".75" fill="currentColor"/>
+                </svg>
+                Download Resume
+              </a>
             </div>
           </div>
-        </div>
 
-        <!-- About preview -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ABOUT PREVIEW ── -->
+    <section class="page-section section-alt">
+      <div class="container">
         <div class="content-block reveal">
-          <h2 class="block-heading">Building Data-Driven Solutions</h2>
+          <h2 class="block-heading">Data analytics enthusiast</h2>
           <p class="block-body">
-            Information Systems student at <strong>Universitas Ciputra Surabaya</strong>, specializing in
-            Data Analytics, Data Science, and Machine Learning. Focused on transforming raw datasets into
-            actionable insights through rigorous analysis, compelling visualizations, and ML-powered tools.
+            Information Systems student at Universitas Ciputra Surabaya with a strong focus on data analytics 
+            and data-driven problem solving. Skilled in SQL and data visualization, with a growing foundation 
+            in machine learning. Actively building projects to turn data into actionable insights and seeking 
+            opportunities to contribute through data-related internships.          
           </p>
-          <p class="block-body" style="margin-top:.85rem">
-            My work spans exploratory data analysis, predictive modeling, and interactive BI dashboards.
-            I'm actively building a data portfolio and seeking internship opportunities where I can contribute
-            to real-world data projects while continuing to grow as a practitioner.
-          </p>
+
           <div class="skill-groups">
             <div class="skill-group">
               <h3 class="sg-title">Data Analytics &amp; BI</h3>
               <div class="stags">
                 <span class="stag">Power BI</span><span class="stag">Tableau</span>
                 <span class="stag">Looker Studio</span><span class="stag">DAX</span>
-                <span class="stag">Excel</span><span class="stag">A/B Testing</span>
-                <span class="stag">Data Storytelling</span>
+                <span class="stag">A/B Testing</span><span class="stag">Data Storytelling</span>
               </div>
             </div>
             <div class="skill-group">
-              <h3 class="sg-title">Machine Learning &amp; Data Science</h3>
+              <h3 class="sg-title">Machine Learning</h3>
               <div class="stags">
                 <span class="stag">Scikit-learn</span><span class="stag">TensorFlow</span>
                 <span class="stag">Feature Engineering</span><span class="stag">Classification</span>
-                <span class="stag">Clustering</span><span class="stag">Statistical Modeling</span>
-                <span class="stag">NLP Basics</span>
+                <span class="stag">Clustering</span><span class="stag">NLP Basics</span>
               </div>
             </div>
             <div class="skill-group">
-              <h3 class="sg-title">Programming &amp; Libraries</h3>
+              <h3 class="sg-title">Programming</h3>
               <div class="stags">
                 <span class="stag">Python</span><span class="stag">SQL</span>
                 <span class="stag">R</span><span class="stag">Pandas</span>
-                <span class="stag">NumPy</span><span class="stag">Matplotlib</span>
-                <span class="stag">Seaborn</span><span class="stag">Plotly</span>
+                <span class="stag">NumPy</span><span class="stag">Plotly</span>
                 <span class="stag">Streamlit</span>
               </div>
             </div>
             <div class="skill-group">
               <h3 class="sg-title">Databases &amp; Tools</h3>
               <div class="stags">
-                <span class="stag">PostgreSQL</span><span class="stag">MySQL</span>
-                <span class="stag">BigQuery</span><span class="stag">dbt</span>
-                <span class="stag">Airflow</span><span class="stag">Git</span>
-                <span class="stag">Google Cloud</span>
+                <span class="stag">PostgreSQL</span><span class="stag">BigQuery</span>
+                <span class="stag">dbt</span><span class="stag">Airflow</span>
+                <span class="stag">Git</span><span class="stag">Google Cloud</span>
               </div>
             </div>
           </div>
-          <a href="#about" class="btn btn-outline" style="margin-top:1.75rem;display:inline-flex">Learn More About Me</a>
+
+          <a href="about.html" class="btn btn-outline" style="margin-top:1.75rem;display:inline-flex">
+            Learn More About Me →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FEATURED PROJECTS PREVIEW ── -->
+    <section class="page-section">
+      <div class="container">
+
+        <div class="proj-section-head reveal">
+          <div>
+            <h2 class="block-heading" style="font-size:1.4rem;margin-bottom:.3rem">Featured Projects</h2>
+            <p class="block-body">A selection of my recent work in data analytics and machine learning</p>
+          </div>
+          <a href="projects.html" class="btn btn-outline">View All Projects →</a>
         </div>
 
-        <!-- Featured projects preview -->
-        <div class="proj-section-head reveal">
-          <h2 class="block-heading">Featured Projects</h2>
-          <p class="block-body">A selection of my recent work in data analytics and machine learning</p>
-        </div>
         <div class="proj-grid" id="home-proj-grid"></div>
-        <div style="text-align:center;margin-top:2.5rem" class="reveal">
-          <a href="#projects" class="btn btn-outline">View All Projects</a>
+
+        <div class="view-all-cta reveal">
+          <a href="projects.html" class="btn btn-outline">View All Projects →</a>
         </div>
 
       </div>
     </section>
+  </main>
+  <script src="components/footer.js"></script>
+ 
+  <!-- Page-specific styles -->
+  <style>
+    .hero-block {
+      display: flex; align-items: center; gap: 2.5rem;
+      padding: 1.5rem 0 2rem;
+    }
+    .hero-text { flex: 1; }
+    .hero-name {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; letter-spacing: -.035em;
+      color: var(--text); margin-bottom: .45rem;
+    }
+    .hero-tagline {
+      font-size: .84rem; color: var(--text-2);
+      margin-bottom: 1.1rem; line-height: 1.6;
+    }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: .75rem; }
+    .proj-section-head {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; margin-bottom: 1.5rem;
+    }
+    .view-all-cta {
+      text-align: center; margin-top: 2rem;
+      /* Hidden on desktop — visible only on mobile when header btn is cut off */
+      display: none;
+    }
+    @media (max-width: 680px) {
+      .hero-block { flex-direction: column; text-align: center; gap: 1.5rem; }
+      .hero-ctas { justify-content: center; }
+      .role-chips { justify-content: center; }
+      .proj-section-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .view-all-cta { display: block; }
+    }
+  </style>
 
-  <script src="script.js"></script>
+  <!-- Scripts -->
+  <script src="js/projects-data.js"></script>
+  <script src="js/projects-render.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("home-proj-grid");
+      if (grid) {
+        // Show top 3: featured first, then by id
+        const top3 = [...PROJECTS]
+          .sort((a, b) => b.featured - a.featured)
+          .slice(0, 3);
+        renderProjectGrid(top3, grid);
+      }
+    });
+  </script>
+
 </body>
 </html>

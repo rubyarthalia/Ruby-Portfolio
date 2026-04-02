@@ -1,34 +1,144 @@
-<!-- ════════════ PROJECTS ════════════ -->
-    <section id="projects" class="page-section">
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Your Name</title>
+  <meta name="description" content="Data analytics, ML models, and pipeline projects by Your Name." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  
+</head>
+<body>
+  <script src="components/header.js"></script>
+  <main>
+    <section class="page-section page-section--top">
       <div class="container">
-        <div class="section-page-header reveal">
-          <h1 class="page-title">Projects</h1>
-          <p class="block-body">Data analytics, ML models, and pipelines — each one solving a real problem.</p>
+
+        <!-- Page header -->
+        <div class="proj-page-header reveal">
+          <div>
+            <h1 class="page-title">Projects</h1>
+            <p class="page-subtitle">
+              Data analytics, ML models, and pipelines — each one solving a real problem.
+              All source code available on GitHub.
+            </p>
+          </div>
         </div>
 
-        <!-- Filters -->
-        <div class="filter-bar reveal">
+        <!-- Filter bar -->
+        <div class="filter-bar reveal" role="group" aria-label="Project filters">
           <div class="fchip-group" id="type-chips" role="radiogroup" aria-label="Filter by type">
             <button class="fchip fchip--on" data-group="type" data-val="all">All</button>
             <button class="fchip" data-group="type" data-val="analyst">Analytics</button>
             <button class="fchip" data-group="type" data-val="develop">Development</button>
           </div>
+
           <div class="fchip-group" id="lang-chips" role="radiogroup" aria-label="Filter by language">
             <button class="fchip fchip--on" data-group="lang" data-val="all">All Languages</button>
             <button class="fchip" data-group="lang" data-val="python">Python</button>
             <button class="fchip" data-group="lang" data-val="sql">SQL</button>
             <button class="fchip" data-group="lang" data-val="r">R</button>
           </div>
+
           <div class="filter-search-wrap">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="search-ico">
               <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.25"/>
               <path d="M9.5 9.5L12 12" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
             </svg>
-            <input type="search" id="proj-search" class="search-input" placeholder="Search projects…" aria-label="Search projects" />
+            <input type="search" id="proj-search" class="search-input"
+              placeholder="Search projects…" aria-label="Search projects" />
           </div>
         </div>
 
-        <p class="proj-count" id="proj-count" aria-live="polite">Showing <strong id="count-num">8</strong> projects</p>
+        <!-- Live count -->
+        <p class="proj-count" id="proj-count" aria-live="polite">
+          Showing <strong id="count-num">8</strong> projects
+        </p>
+
+        <!-- Grid -->
         <div class="proj-grid" id="all-proj-grid"></div>
+
       </div>
     </section>
+  </main>
+  <script src="components/footer.js"></script>
+  <style>
+    .proj-page-header {
+      margin-bottom: 2.25rem;
+    }
+  </style>
+
+  <script src="js/projects-data.js"></script>
+  <script src="js/projects-render.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid     = document.getElementById("all-proj-grid");
+      const countEl  = document.getElementById("count-num");
+      const searchEl = document.getElementById("proj-search");
+      const typeGrp  = document.getElementById("type-chips");
+      const langGrp  = document.getElementById("lang-chips");
+
+      let activeType = "all";
+      let activeLang = "all";
+      let searchQ    = "";
+
+      function applyFilters() {
+        const q = searchQ.toLowerCase().trim();
+        const filtered = PROJECTS.filter(p => {
+          const typeOk   = activeType === "all" || p.type === activeType;
+          const langOk   = activeLang === "all" || p.langs.includes(activeLang);
+          const searchOk = !q
+            || p.title.toLowerCase().includes(q)
+            || p.desc.toLowerCase().includes(q)
+            || p.tags.some(t => t.toLowerCase().includes(q));
+          return typeOk && langOk && searchOk;
+        });
+        renderProjectGrid(filtered, grid);
+        if (countEl) countEl.textContent = filtered.length;
+      }
+
+      // Type chips
+      typeGrp.addEventListener("click", e => {
+        const btn = e.target.closest(".fchip");
+        if (!btn) return;
+        typeGrp.querySelectorAll(".fchip").forEach(c => {
+          c.classList.remove("fchip--on");
+          c.setAttribute("aria-checked", "false");
+        });
+        btn.classList.add("fchip--on");
+        btn.setAttribute("aria-checked", "true");
+        activeType = btn.dataset.val;
+        applyFilters();
+      });
+
+      // Language chips
+      langGrp.addEventListener("click", e => {
+        const btn = e.target.closest(".fchip");
+        if (!btn) return;
+        langGrp.querySelectorAll(".fchip").forEach(c => {
+          c.classList.remove("fchip--on");
+          c.setAttribute("aria-checked", "false");
+        });
+        btn.classList.add("fchip--on");
+        btn.setAttribute("aria-checked", "true");
+        activeLang = btn.dataset.val;
+        applyFilters();
+      });
+
+      // Search
+      searchEl.addEventListener("input", e => {
+        searchQ = e.target.value;
+        applyFilters();
+      });
+
+      // Initial render
+      applyFilters();
+    });
+  </script>
+
+</body>
+</html>

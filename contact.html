@@ -1,37 +1,133 @@
-<!-- ════════════ CONTACT ════════════ -->
-    <section id="contact" class="page-section section-alt">
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Your Name</title>
+  <meta name="description" content="Get in touch with Your Name — open to Data internships and collaborations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <script src="components/header.js"></script>
+  <main>
+    <section class="page-section page-section--top">
       <div class="container">
-        <div class="section-page-header reveal">
+
+        <!-- Page header -->
+        <div class="contact-page-header reveal">
           <h1 class="page-title">Contact</h1>
-          <p class="block-body">Open to Data internships, project collaborations, and research opportunities. I'll get back to you within 24 hours.</p>
+          <p class="page-subtitle">
+            Open to Data internships, project collaborations, and research opportunities.
+            I'll get back to you within 24 hours.
+          </p>
         </div>
+
+        <!-- Contact grid -->
         <div class="contact-grid">
+
+          <!-- Left: info -->
           <div class="reveal">
             <h2 class="block-heading">Get In Touch</h2>
-            <p class="block-body" style="margin-bottom:1.75rem">Whether you have an internship opportunity, a project idea, or just want to talk data — I'd love to connect.</p>
+            <p class="block-body" style="margin-bottom:1.5rem">
+              Whether you have an internship opportunity, a project idea, or just want
+              to talk data — I'd love to connect.
+            </p>
+
             <address class="contact-details">
-              <div class="cd-row"><span class="cd-icon">✉</span><div><p class="cd-label">Email</p><p class="cd-val">yourname@student.ciputra.ac.id</p></div></div>
-              <div class="cd-row"><span class="cd-icon">📍</span><div><p class="cd-label">Location</p><p class="cd-val">Surabaya, East Java, Indonesia</p></div></div>
-              <div class="cd-row"><span class="cd-icon">🎓</span><div><p class="cd-label">University</p><p class="cd-val">Universitas Ciputra Surabaya</p></div></div>
-              <div class="cd-row"><span class="cd-icon">💼</span><div><p class="cd-label">Status</p><p class="cd-val">Seeking Data Internships — 2025</p></div></div>
+              <div class="cd-row">
+                <div class="cd-icon" aria-hidden="true">✉</div>
+                <div>
+                  <p class="cd-label">Email</p>
+                  <p class="cd-val">yourname@student.ciputra.ac.id</p>
+                </div>
+              </div>
+              <div class="cd-row">
+                <div class="cd-icon" aria-hidden="true">📍</div>
+                <div>
+                  <p class="cd-label">Location</p>
+                  <p class="cd-val">Surabaya, East Java, Indonesia</p>
+                </div>
+              </div>
+              <div class="cd-row">
+                <div class="cd-icon" aria-hidden="true">🎓</div>
+                <div>
+                  <p class="cd-label">University</p>
+                  <p class="cd-val">Universitas Ciputra Surabaya</p>
+                </div>
+              </div>
+              <div class="cd-row">
+                <div class="cd-icon" aria-hidden="true">💼</div>
+                <div>
+                  <p class="cd-label">Status</p>
+                  <p class="cd-val">Seeking Data Internships — 2025</p>
+                </div>
+              </div>
             </address>
           </div>
+
+          <!-- Right: form -->
           <div class="contact-form-wrap reveal">
-            <!-- Register at formspree.io → replace YOUR_FORM_ID -->
-            <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+            <!--
+              SETUP:
+              1. Go to https://formspree.io and create a free account
+              2. Create a new form, copy your form ID
+              3. Replace YOUR_FORM_ID below with your actual ID
+            -->
+            <form
+              id="contact-form"
+              action="https://formspree.io/f/YOUR_FORM_ID"
+              method="POST"
+              novalidate
+            >
               <div class="form-row">
-                <div class="form-group"><label for="f-fname">First Name *</label><input id="f-fname" type="text" name="first_name" placeholder="John" required autocomplete="given-name" /></div>
-                <div class="form-group"><label for="f-lname">Last Name</label><input id="f-lname" type="text" name="last_name" placeholder="Doe" autocomplete="family-name" /></div>
+                <div class="form-group">
+                  <label for="f-fname">First Name *</label>
+                  <input id="f-fname" type="text" name="first_name"
+                    placeholder="John" required autocomplete="given-name" />
+                </div>
+                <div class="form-group">
+                  <label for="f-lname">Last Name</label>
+                  <input id="f-lname" type="text" name="last_name"
+                    placeholder="Doe" autocomplete="family-name" />
+                </div>
               </div>
-              <div class="form-group"><label for="f-email">Email Address *</label><input id="f-email" type="email" name="email" placeholder="john@company.com" required autocomplete="email" /></div>
-              <div class="form-group"><label for="f-subject">Subject</label><input id="f-subject" type="text" name="subject" placeholder="Internship Opportunity / Project / Collaboration…" /></div>
-              <div class="form-group"><label for="f-message">Message *</label><textarea id="f-message" name="message" rows="5" placeholder="Tell me about the opportunity or what you'd like to discuss…" required></textarea></div>
-              <button type="submit" class="btn btn-primary btn-full" id="form-submit">Send Message</button>
+              <div class="form-group">
+                <label for="f-email">Email Address *</label>
+                <input id="f-email" type="email" name="email"
+                  placeholder="john@company.com" required autocomplete="email" />
+              </div>
+              <div class="form-group">
+                <label for="f-subject">Subject</label>
+                <input id="f-subject" type="text" name="subject"
+                  placeholder="Internship Opportunity / Project / Collaboration…" />
+              </div>
+              <div class="form-group">
+                <label for="f-message">Message *</label>
+                <textarea id="f-message" name="message" rows="5"
+                  placeholder="Tell me about the opportunity or what you'd like to discuss…"
+                  required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full" id="form-submit">
+                Send Message
+              </button>
               <div class="form-status" id="form-status" role="alert" aria-live="polite"></div>
             </form>
           </div>
+
         </div>
+
       </div>
     </section>
-
   </main>
+  <script src="components/footer.js"></script>
+
+  <style>
+    .contact-page-header { margin-bottom: 2.5rem; }
+  </style>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
