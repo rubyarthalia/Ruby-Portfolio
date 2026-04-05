@@ -41,6 +41,7 @@ const PROJECTS = [
     tags: ["C#", ".NET", "Windows Forms", "MySQL", "Desktop App"],
     repo: "rubyarthalia/Order-Management-System-for-MSMEs",
     demo: null,
+    ghUrl: "https://github.com/rubyarthalia/Order-Management-System-for-MSMEs",
   },
 
   {
@@ -59,6 +60,8 @@ const PROJECTS = [
     tags: ["Laravel", "PHP", "MySQL", "Blade", "Web App"],
     repo: "rubyarthalia/BersihIn",
     demo: null,
+    ghUrl: "https://github.com/rubyarthalia/BersihIn",
+    demo: "https://bersihin.sift-uc.id/",
   },
 
   {
@@ -77,6 +80,7 @@ const PROJECTS = [
     tags: ["C#", ".NET", "Windows Forms", "Desktop App"],
     repo: "rubyarthalia/Simple-Cashier-App",
     demo: null,
+    ghUrl: "https://github.com/rubyarthalia/Simple-Cashier-App",
   },
 
   {
@@ -95,6 +99,8 @@ const PROJECTS = [
     tags: ["Python", "Pandas", "NumPy", "Scikit-learn", "Matplotlib", "EDA", "Machine Learning"],
     repo: "rubyarthalia/DataMining_Ruby",
     demo: null,
+    ghUrl: "https://github.com/rubyarthalia/DataMining_Ruby",
+
   },
 
   {
@@ -113,6 +119,7 @@ const PROJECTS = [
     tags: ["HTML", "CSS", "JavaScript", "Responsive Design", "Frontend"],
     repo: "rubyarthalia/Flora-Calculator",
     demo: "https://rubyarthalia.github.io/Flora-Calculator",
+    ghUrl: "https://github.com/rubyarthalia/Flora-Calculator",
   },
   
   {
