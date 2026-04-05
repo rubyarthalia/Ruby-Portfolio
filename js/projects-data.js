@@ -26,115 +26,128 @@
 
 const PROJECTS = [
   {
-    id: 1, featured: true,
-    type: "analyst", langs: ["sql", "python"],
-    title: "sales-performance-dashboard",
-    desc: "End-to-end Power BI dashboard tracking KPIs across 5 regions. Reduced manual reporting time by 80% and improved decision-making speed for stakeholders.",
+    id: 1,
+    featured: true,
+    type: "Development",
+    langs: ["C#", ".NET Framework", "Windows Forms", "MySQL"],
+    title: "Order Management System for MSMEs",
+    desc: "A dual-application system built for a small business (MSME), with a customer-facing app for browsing catalogs and placing orders, and a staff-facing app for managing products, pre-orders, and generating reports.",
     bullets: [
-      "Automated data refresh pipeline connecting SQL Server → Power BI",
-      "DAX measures for YoY growth, rolling averages, and forecast variance"
+      "Built two separate C# WinForms apps: one for customers and one for staff",
+      "Staff app supports catalog management, pre-order handling, and batch/monthly/yearly reporting",
+      "MySQL database integration for persistent order and product data",
+      "Secure authentication flow with dedicated login and signup pages"
     ],
-    tags: ["Power BI", "SQL", "Python", "DAX", "Pandas"],
-    repo: "yourusername/sales-performance-dashboard",
+    tags: ["C#", ".NET", "Windows Forms", "MySQL", "Desktop App"],
+    repo: "rubyarthalia/Order-Management-System-for-MSMEs",
     demo: null,
-    ghUrl: "https://github.com/yourusername/sales-performance-dashboard"
   },
+
   {
-    id: 2, featured: true,
-    type: "develop", langs: ["python"],
-    title: "customer-churn-prediction",
-    desc: "Random Forest + Logistic Regression model predicting customer churn with 89% accuracy. Deployed as an interactive Streamlit app for non-technical users.",
+    id: 2,
+    featured: true,
+    type: "Development",
+    langs: ["PHP", "Laravel", "Blade", "MySQL", "HTML", "CSS"],
+    title: "BersihIn — On-Demand Cleaning Service Platform",
+    desc: "A Laravel-based web platform providing on-demand professional cleaning services, featuring a multi-role architecture for customers and administrators to manage service catalogs, bookings, and secure transactions.",
     bullets: [
-      "Feature engineering on 20+ customer behavioral variables",
-      "SHAP explainability dashboard showing top churn drivers"
+      "Multi-role system supporting both customer and admin workflows",
+      "Admin panel for managing service catalog and incoming bookings",
+      "Secure authentication and authorization with Laravel",
+      "Responsive web interface built with Blade templating"
     ],
-    tags: ["Python", "Scikit-learn", "Streamlit", "Pandas", "SHAP"],
-    repo: "yourusername/customer-churn-prediction",
+    tags: ["Laravel", "PHP", "MySQL", "Blade", "Web App"],
+    repo: "rubyarthalia/BersihIn",
     demo: null,
-    ghUrl: "https://github.com/yourusername/customer-churn-prediction"
   },
+
   {
-    id: 3, featured: false,
-    type: "analyst", langs: ["python", "sql"],
-    title: "ecommerce-rfm-segmentation",
-    desc: "Customer segmentation using Recency-Frequency-Monetary analysis on 100k+ transactions, visualized in an interactive Tableau dashboard.",
+    id: 3,
+    featured: false,
+    type: "Development",
+    langs: ["C#", ".NET", "Windows Forms"],
+    title: "Simple Cashier App",
+    desc: "A desktop cashier system for restaurants, handling table selection, food and drink ordering by category, payment processing, and receipt generation.",
     bullets: [
-      "RFM scoring pipeline processing 100k+ transaction records",
-      "Tableau dashboard with dynamic segment drilldowns"
+      "Categorized menu interface with separate modules for food and drinks",
+      "Table management system for dine-in order tracking",
+      "Integrated payment module with automatic total calculation",
+      "Receipt (Nota) generation after successful transaction"
     ],
-    tags: ["Python", "SQL", "Tableau", "NumPy", "Pandas"],
-    repo: "yourusername/ecommerce-rfm-segmentation",
+    tags: ["C#", ".NET", "Windows Forms", "Desktop App"],
+    repo: "rubyarthalia/Simple-Cashier-App",
     demo: null,
-    ghUrl: "https://github.com/yourusername/ecommerce-rfm-segmentation"
   },
+
   {
-    id: 4, featured: false,
-    type: "develop", langs: ["python", "sql"],
-    title: "job-listings-scraper",
-    desc: "Automated web scraping pipeline collecting job listing data from 3 platforms, storing to PostgreSQL and sending daily digest emails.",
+    id: 4,
+    featured: false,
+    type: "Analytics",
+    langs: ["Python", "Jupyter Notebook", "Pandas", "NumPy", "Scikit-learn", "Matplotlib"],
+    title: "Data Mining Collection",
+    desc: "A semester-long collection of Jupyter Notebooks covering the full data mining workflow — from data cleaning and EDA to machine learning techniques including clustering and classification.",
     bullets: [
-      "Scrapers for 3 Indonesian job platforms with deduplication logic",
-      "Airflow DAG scheduling with failure alerts via email"
+      "Hands-on data cleaning and preprocessing across multiple real datasets",
+      "Exploratory data analysis (EDA) with Matplotlib and Pandas",
+      "Applied ML models including clustering (K-Means) and classification algorithms",
+      "Structured weekly progression documenting growth across the semester"
     ],
-    tags: ["Python", "BeautifulSoup", "PostgreSQL", "Airflow"],
-    repo: "yourusername/job-listings-scraper",
+    tags: ["Python", "Pandas", "NumPy", "Scikit-learn", "Matplotlib", "EDA", "Machine Learning"],
+    repo: "rubyarthalia/DataMining_Ruby",
     demo: null,
-    ghUrl: "https://github.com/yourusername/job-listings-scraper"
   },
+
   {
-    id: 5, featured: false,
-    type: "analyst", langs: ["python", "r"],
-    title: "idx-stock-eda",
-    desc: "Exploratory analysis on Indonesian Stock Exchange (IDX) data including correlation heatmaps, rolling averages, and sector volatility comparisons.",
+    id: 5,
+    featured: false,
+    type: "Development",
+    langs: ["HTML", "CSS", "JavaScript"],
+    title: "Flora Calculator",
+    desc: "A responsive, nature-themed web calculator with keyboard support, light/dark mode toggle, calculation history display, and a clean UI — built entirely with vanilla HTML, CSS, and JavaScript.",
     bullets: [
-      "Cleaned and processed 5 years of IDX OHLCV data",
-      "Interactive Plotly charts with Bollinger Bands and rolling correlation"
+      "Full keyboard support for fast arithmetic input",
+      "Light/dark mode toggle with nature-inspired icons",
+      "Calculation history display for tracking previous operations",
+      "Responsive layout that works across screen sizes"
     ],
-    tags: ["Python", "R", "Plotly", "Pandas", "Statsmodels"],
-    repo: "yourusername/idx-stock-eda",
-    demo: null,
-    ghUrl: "https://github.com/yourusername/idx-stock-eda"
+    tags: ["HTML", "CSS", "JavaScript", "Responsive Design", "Frontend"],
+    repo: "rubyarthalia/Flora-Calculator",
+    demo: "https://rubyarthalia.github.io/Flora-Calculator",
   },
+  
   {
-    id: 6, featured: false,
-    type: "analyst", langs: ["sql"],
-    title: "hospital-wait-time-analytics",
-    desc: "SQL-based patient flow analysis identifying operational bottlenecks. Findings contributed to a 22% reduction in average patient wait times.",
+    id: 6,
+    featured: true,
+    type: "Analytics",
+    langs: ["Looker Studio", "Google Sheets"],
+    title: "Student Lifestyle & Academic Performance Dashboard",
+    desc: "A Business Intelligence dashboard analyzing how 2,000 students' daily habits — study hours, sleep, social activity, and extracurriculars — impact their GPA and stress levels, built using the DIA (Data, Insight, Action) framework.",
     bullets: [
-      "Window functions to calculate queue build-up by hour of day",
-      "Power BI report highlighting peak bottleneck windows for management"
+      "Visualized GPA distribution across 2,000 students with histogram and donut charts",
+      "Identified positive correlation between study hours and GPA via scatter plot trendlines",
+      "Analyzed stress level breakdown — 51.4% high stress — across lifestyle activity segments",
+      "Applied DIA framework to translate each chart into actionable recommendations"
     ],
-    tags: ["SQL", "Power BI", "Excel"],
-    repo: "yourusername/hospital-wait-time-analytics",
-    demo: null,
-    ghUrl: "https://github.com/yourusername/hospital-wait-time-analytics"
+    tags: ["Looker Studio", "Data Visualization", "Business Intelligence", "EDA"],
+    repo: null,
+    demo: "https://lookerstudio.google.com/reporting/4636341d-dd38-4b8e-8ec5-eb55537626cd",
   },
+
   {
-    id: 7, featured: false,
-    type: "develop", langs: ["python"],
-    title: "sentiment-analysis-reviews",
-    desc: "NLP pipeline classifying Indonesian-language product reviews using fine-tuned IndoBERT, achieving 91% F1-score on the held-out test set.",
+    id: 7,
+    featured: true,
+    type: "Analytics",
+    langs: ["Python", "Pandas", "NumPy", "Looker Studio", "Google BigQuery", "SQL"],
+    title: "Telco Customer Churn Data Warehouse & Dashboard",
+    desc: "An end-to-end data warehousing project on a 7,044-customer telco dataset — from ETL pipeline and star schema design in BigQuery, to a 2-page Looker Studio dashboard tracking churn behavior, revenue, and at-risk customer segments.",
     bullets: [
-      "Fine-tuned IndoBERT on 15k labeled Indonesian reviews",
-      "FastAPI inference endpoint for real-time classification"
+      "Built full ETL pipeline in Python: cleaned null values, converted data types, encoded categorical columns, and grouped churn reasons into 5 categories",
+      "Designed a star schema with 1 fact table and 7 dimension tables (Customer, Location, Services, Addons, Streaming, Payment, Churn), loaded into Google BigQuery",
+      "Dashboard Page 1: tracked 26.7% churn rate, 1,870 at-risk customers, churn by gender/senior/partner/dependents, tenure distribution, and top-paying customers",
+      "Dashboard Page 2: visualized add-on adoption, bundle usage (68.6%), churn by city/contract/payment method, churn reasons, and high-risk customer list"
     ],
-    tags: ["Python", "HuggingFace", "PyTorch", "FastAPI", "BERT"],
-    repo: "yourusername/sentiment-analysis-reviews",
-    demo: null,
-    ghUrl: "https://github.com/yourusername/sentiment-analysis-reviews"
-  },
-  {
-    id: 8, featured: false,
-    type: "analyst", langs: ["python", "sql"],
-    title: "geospatial-retail-heatmap",
-    desc: "Folium + GeoPandas visualization of retail foot-traffic patterns in Surabaya. Used by management to identify optimal expansion locations.",
-    bullets: [
-      "Processed GPS check-in data with GeoPandas spatial joins",
-      "Folium choropleth heatmap with district-level density overlays"
-    ],
-    tags: ["Python", "GeoPandas", "Folium", "SQL", "Plotly"],
-    repo: "yourusername/geospatial-retail-heatmap",
-    demo: null,
-    ghUrl: "https://github.com/yourusername/geospatial-retail-heatmap"
+    tags: ["Python", "Pandas", "ETL", "BigQuery", "SQL", "Looker Studio", "Data Warehouse", "Star Schema"],
+    repo: null,
+    demo: "https://lookerstudio.google.com/reporting/f1a12446-bcbe-4757-bf82-92fb503929af",
   },
 ];

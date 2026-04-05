@@ -18,11 +18,11 @@
 
         <!-- About hero -->
         <div class="about-hero reveal">
-          <div class="hero-photo hero-photo--sm">\
+          <div class="hero-photo">
             <img src="assets/DSC51415.JPG" alt="Ruby Arthalia Golden" />
           </div>
           <div class="about-hero-text">
-            <h1 class="about-name">Your Name</h1>
+            <h1 class="about-name">Ruby Arthalia Golden</h1>
             <p class="about-role">Information Systems Student &amp; Aspiring Data Analyst</p>
             <div class="role-chips">
               <span class="role-chip">Data Analytics</span>
@@ -207,6 +207,15 @@
     .about-hero {
       display: flex; align-items: center; gap: 2rem;
       padding: 1.5rem 0 2.5rem;
+    }
+    .about-hero .hero-photo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+    }
+    .about-hero .hero-photo img {
+      object-fit: cover;
+      border-radius: 50%;
     }
     .about-name {
       font-size: clamp(1.5rem, 3vw, 2rem);
