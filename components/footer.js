@@ -5,11 +5,10 @@
  */
 
 (function () {
-  /* ── CONFIG — edit these ── */
   const NAME    = "Ruby Arthalia Golden";
   const YEAR    = new Date().getFullYear();
   const UNI     = "Universitas Ciputra Surabaya";
-  const EMAIL   = "rubyarthalia@gmail.com";
+  const EMAIL   = "arthaliaruby@gmail.com";
   const SOCIALS = {
     linkedin:  "https://linkedin.com/in/rubyarthalia",
     github:    "https://github.com/rubyarthalia",
