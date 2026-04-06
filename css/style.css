@@ -226,6 +226,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-size: .84rem; color: var(--text-2); line-height: 1.65;
 }
 
+.exp-challenge {
+  font-size: .82rem;
+  color: var(--text-2);
+  border-left: 2px solid var(--accent);
+  padding-left: .75rem;
+  margin-top: .75rem;
+  line-height: 1.6;
+}
+
+.challenge-label {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.exp-desc {
+  font-size: .85rem;
+  color: var(--text-2);
+  margin-bottom: .75rem;
+  font-style: italic;
+}
+
 /* ─── CERT GRID ─── */
 .cert-grid {
   display: grid;
