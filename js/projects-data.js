@@ -157,4 +157,23 @@ const PROJECTS = [
     repo: null,
     demo: "https://lookerstudio.google.com/reporting/f1a12446-bcbe-4757-bf82-92fb503929af",
   },
+
+  {
+    id: 8,
+    featured: false,
+    type: "Development",
+    langs: ["HTML", "CSS", "JavaScript"],
+    title: "Simple Photobooth",
+    desc: "A browser-based photobooth application with a guided multi-step workflow for creating print-ready photo strips. Features smart image cropping, customizable borders and filters, and accurate physical dimensions for real photo booth frames.",
+    bullets: [
+      "Built a 5-step guided workflow: frame selection → input method → capture/upload → customization → download",
+      "Supports 3 frame layouts — Normal Strip (5.08×15.24cm), 2×2 Grid (10×10cm), and Vintage (3.8×15.24cm) — all print-ready at 300 DPI",
+      "Implemented real-time camera access via getUserMedia API with countdown capture, shutter sound, and slot-by-slot refill",
+      "Added filter effects (Normal, B&W, Sepia, Vivid), border color picker, and adaptive timestamp text color based on border brightness",
+      "Zero external dependencies — built entirely with vanilla JavaScript, Canvas API, and FileReader API"
+    ],
+    tags: ["HTML", "CSS", "JavaScript", "Canvas API", "getUserMedia", "Vanilla JS", "Frontend"],
+    repo: "rubyarthalia/Simple-Photobooth",
+    demo: "https://rubyarthalia.github.io/Simple-Photobooth",
+  },
 ];
