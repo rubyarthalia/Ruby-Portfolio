@@ -175,5 +175,6 @@ const PROJECTS = [
     tags: ["HTML", "CSS", "JavaScript", "Canvas API", "getUserMedia", "Vanilla JS", "Frontend"],
     repo: "rubyarthalia/Simple-Photobooth",
     demo: "https://rubyarthalia.github.io/Simple-Photobooth",
+    ghUrl: "https://github.com/rubyarthalia/Simple-Photobooth",
   },
 ];
