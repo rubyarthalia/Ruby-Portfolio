@@ -49,11 +49,9 @@ const FORK_SVG = `<svg width="13" height="13" viewBox="0 0 16 16" fill="currentC
 function buildProjectCard(p, stats = null) {
   const card = document.createElement("article");
   const normalizedType = normalizeProjectType(p.type);
-  const normalizedLangs = (p.langs || []).map(l => String(l).toLowerCase().trim());
 
   card.className = "proj-card";
   card.dataset.type  = normalizedType;
-  card.dataset.langs = normalizedLangs.join(",");
 
   const typeLabel = normalizedType === "analyst" ? "Data Analytics" : "Development";
   const langLabel = (p.langs || []).join(" · ");
