@@ -10,7 +10,7 @@
   /* ── Detect active page ── */
   const current = window.location.pathname.split("/").pop() || "index.html";
 
-  /* ── Build nav HTML ── */
+  /* ── nav HTML ── */
   const links = PAGES.map(p => {
     const active = (current === p.href || (current === "" && p.href === "index.html"))
       ? ' class="nav-link active"' : ' class="nav-link"';
@@ -29,8 +29,10 @@
     <ul class="nav-links" role="list">${links}</ul>
 
     <div class="nav-actions">
-      <button class="theme-toggle" id="theme-btn" aria-label="Toggle theme" aria-pressed="false">
-        <span id="theme-icon">☀</span>
+      <button class="theme-switch" id="theme-btn" aria-label="Toggle theme" aria-pressed="false">
+        <span class="switch-track">
+          <span class="switch-knob" id="theme-icon">☀</span>
+        </span>
       </button>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -88,15 +90,29 @@
 .nav-link:hover, .nav-link.active { color: var(--text); }
 .nav-link.active::after, .nav-link:hover::after { transform: scaleX(1); }
 .nav-actions { display: flex; align-items: center; gap: .6rem; }
-.theme-toggle {
-  width: 44px; height: 44px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  background: transparent; border: 1px solid var(--border);
-  color: var(--text-2); font-size: 1.1rem; transition: all .3s ease;
+.theme-switch {
+  position: relative; width: 56px; height: 32px;
+  padding: 0; border: none; background: transparent;
+  cursor: pointer; border-radius: 16px; transition: all .3s ease;
 }
-.theme-toggle:hover { border-color: var(--border-h); color: var(--text); }
-.theme-toggle[aria-pressed="true"] { 
-  background: var(--accent-dim); border-color: var(--accent-bdr); color: var(--accent);
+.switch-track {
+  position: absolute; inset: 0; border-radius: 16px;
+  background: var(--border); border: 1px solid var(--border);
+  display: flex; align-items: center; transition: all .3s ease;
+}
+.theme-switch:hover .switch-track { border-color: var(--border-h); }
+.theme-switch[aria-pressed="true"] .switch-track {
+  background: var(--accent-dim); border-color: var(--accent-bdr);
+}
+.switch-knob {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--bg-card); border: 1px solid var(--border);
+  font-size: .9rem; color: var(--text-2);
+  position: absolute; left: 2px; transition: all .3s ease;
+}
+.theme-switch[aria-pressed="true"] .switch-knob {
+  left: 26px; color: var(--accent); border-color: var(--accent);
 }
 .hamburger { display: none; flex-direction: column; gap: 5px; padding: 5px; }
 .hamburger span { display: block; width: 20px; height: 1.5px; background: var(--text); border-radius: 2px; transition: all .25s; }
