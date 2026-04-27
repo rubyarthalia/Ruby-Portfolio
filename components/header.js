@@ -1,9 +1,3 @@
-/**
- * components/header.js
- * Injects the shared sticky nav into every page.
- * Edit your name, links, and social URLs here once — applies everywhere.
- */
-
 (function () {
   const NAME  = "Ruby Arthalia Golden";
   const PAGES = [
@@ -35,9 +29,8 @@
     <ul class="nav-links" role="list">${links}</ul>
 
     <div class="nav-actions">
-      <button class="theme-btn" id="theme-btn" aria-label="Toggle theme">
+      <button class="theme-toggle" id="theme-btn" aria-label="Toggle theme" aria-pressed="false">
         <span id="theme-icon">☀</span>
-        <span id="theme-label">Light mode</span>
       </button>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -95,14 +88,16 @@
 .nav-link:hover, .nav-link.active { color: var(--text); }
 .nav-link.active::after, .nav-link:hover::after { transform: scaleX(1); }
 .nav-actions { display: flex; align-items: center; gap: .6rem; }
-.theme-btn {
-  display: flex; align-items: center; gap: 6px;
-  padding: 5px 12px; border-radius: 6px;
-  border: 1px solid var(--border); background: var(--bg-card);
-  color: var(--text-2); font-size: .75rem; font-weight: 500;
-  transition: background .2s, border-color .2s, color .2s;
+.theme-toggle {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text-2); font-size: 1.1rem; transition: all .3s ease;
 }
-.theme-btn:hover { background: var(--bg-hover); color: var(--text); border-color: var(--border-h); }
+.theme-toggle:hover { border-color: var(--border-h); color: var(--text); }
+.theme-toggle[aria-pressed="true"] { 
+  background: var(--accent-dim); border-color: var(--accent-bdr); color: var(--accent);
+}
 .hamburger { display: none; flex-direction: column; gap: 5px; padding: 5px; }
 .hamburger span { display: block; width: 20px; height: 1.5px; background: var(--text); border-radius: 2px; transition: all .25s; }
 .nav-drawer {
@@ -146,7 +141,7 @@
       html.setAttribute("data-theme", t);
       localStorage.setItem("pf-theme", t);
       if (themeIcon) themeIcon.textContent  = t === "dark" ? "☀" : "☾";
-      if (themeLbl)  themeLbl.textContent   = t === "dark" ? "Light mode" : "Dark mode";
+      if (themeBtn) themeBtn.setAttribute("aria-pressed", t === "light" ? "true" : "false");
     }
     const saved = localStorage.getItem("pf-theme") || "dark";
     applyTheme(saved);
