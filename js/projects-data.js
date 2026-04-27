@@ -177,4 +177,23 @@ const PROJECTS = [
     demo: "https://rubyarthalia.github.io/Simple-Photobooth",
     ghUrl: "https://github.com/rubyarthalia/Simple-Photobooth",
   },
+
+  {
+  id: 5,
+  featured: true,
+  type: "Analytics",
+  langs: ["Python", "Pandas", "SQL", "BigQuery", "Looker Studio"],
+  title: "Kimia Farma Retail Performance Analysis",
+  desc: "End-to-end data analysis of Kimia Farma’s retail performance (2020–2023), transforming raw transactional data into an interactive dashboard to uncover sales trends, regional disparities, and product-level insights.",
+  bullets: [
+    "Performed data cleaning and preprocessing using Python (Pandas) across multiple raw datasets",
+    "Built a unified analytical dataset in BigQuery using SQL joins and calculated fields",
+    "Developed an interactive Looker Studio dashboard to analyze sales trends, top cities, and product performance",
+    "Identified key business insights including revenue concentration, stagnant growth patterns, and branch-level inefficiencies"
+  ],
+  tags: ["Python", "Pandas", "SQL", "BigQuery", "Looker Studio", "EDA", "Data Visualization"],
+  repo: "rubyarthalia/Kimia-Farma-Performance-Analysis",
+  demo: "https://datastudio.google.com/reporting/8f287e12-db86-4a77-91e1-42eb02b11df6",
+  ghUrl: "https://github.com/rubyarthalia/Kimia-Farma-Performance-Analysis"
+}
 ];
