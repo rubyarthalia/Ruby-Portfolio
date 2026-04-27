@@ -112,7 +112,7 @@ const PROJECTS = [
     desc: "A responsive, nature-themed web calculator with keyboard support, light/dark mode toggle, calculation history display, and a clean UI — built entirely with vanilla HTML, CSS, and JavaScript.",
     bullets: [
       "Full keyboard support for fast arithmetic input",
-      "Light/dark mode toggle with nature-inspired icons",
+      "Leaf/Flower (Light/Dark) mode toggle with nature-inspired icons",
       "Calculation history display for tracking previous operations",
       "Responsive layout that works across screen sizes"
     ],
@@ -179,7 +179,7 @@ const PROJECTS = [
   },
 
   {
-  id: 5,
+  id: 9,
   featured: true,
   type: "Analytics",
   langs: ["Python", "Pandas", "SQL", "BigQuery", "Looker Studio"],
@@ -195,5 +195,23 @@ const PROJECTS = [
   repo: "rubyarthalia/Kimia-Farma-Performance-Analysis",
   demo: "https://datastudio.google.com/reporting/8f287e12-db86-4a77-91e1-42eb02b11df6",
   ghUrl: "https://github.com/rubyarthalia/Kimia-Farma-Performance-Analysis"
+},
+{
+  id: 10,
+  featured: true,
+  type: "Analytics",
+  langs: ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Jupyter Notebook"],
+  title: "Delivery & Logistics Efficiency Analysis",
+  desc: "Exploratory analysis of 96K Olist e-commerce orders to uncover delivery performance patterns, freight cost dynamics, and customer satisfaction drivers.",
+  bullets: [
+    "Cleaned and merged 9 relational tables into a single analysis-ready DataFrame",
+    "Engineered delivery delay, freight ratio, and on-time flags from raw timestamps",
+    "Discovered that beating delivery expectations drives satisfaction more than speed",
+    "Identified Amazonas (AM) as a severe logistics outlier with a 33% late delivery rate"
+  ],
+  tags: ["Python", "Pandas", "Seaborn", "EDA", "Logistics", "E-Commerce"],
+  repo: "rubyarthalia/Delivery-and-Logistic-Efficiency-Analysis",
+  demo: null,
+  ghUrl: "https://github.com/rubyarthalia/Delivery-and-Logistic-Efficiency-Analysis",
 }
 ];
